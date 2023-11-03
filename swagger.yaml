@@ -1,0 +1,84 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: ToDo Swagger
+  description: API documentation for the ToDo application.
+
+basePath: /
+
+paths:
+  /register:
+    post:
+      summary: User Registration
+      description: Register a new user.
+      parameters:
+        - name: firstName
+          in: formData
+          type: string
+          description: User's first name.
+        - name: lastName
+          in: formData
+          type: string
+          description: User's last name.
+        - name: userName
+          in: formData
+          type: string
+          description: User's username.
+        - name: password
+          in: formData
+          type: string
+          description: User's password.
+      responses:
+        201:
+          description: User registered successfully. The registration was completed without issues.
+        400:
+          description: Bad request. The request is missing required parameters or includes invalid data.
+        409:
+          description: Conflict. A user with the same username already exists in the system, preventing the creation of a new user with the same credentials.
+        500:
+          description: Internal server error. An unexpected server error occurred during the registration process.
+
+  /login:
+    post:
+      summary: User Login
+      description: Log in an existing user.
+      parameters:
+        - name: userName
+          in: formData
+          type: string
+          description: User's username.
+        - name: password
+          in: formData
+          type: string
+          description: User's password.
+      responses:
+        200:
+          description: Login successful. The user's credentials were correct, and the login was successful.
+        401:
+          description: Unauthorized. The login attempt failed because the provided username or password was incorrect.
+        500:
+          description: Internal server error. An unexpected server error occurred during the login process.
+
+  /dashboard:
+    get:
+      summary: Access Dashboard
+      description: Access the user dashboard.
+      security:
+        - apiKey: []
+      responses:
+        200:
+          description: User dashboard accessed successfully. The user has the necessary authorization and valid credentials to view the dashboard.
+        401:
+          description: Unauthorized. The request lacks proper authentication, such as a missing or invalid API key.
+        500:
+          description: Internal server error. An unexpected server error occurred during the dashboard access process.
+
+  /logout:
+    get:
+      summary: User Logout
+      description: Log out the current user.
+      responses:
+        200:
+          description: Logout successful. The user's session has been terminated, and they are logged out of the system.
+        500:
+          description: Internal server error. An unexpected server error occurred during the logout process.
