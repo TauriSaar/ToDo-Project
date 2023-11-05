@@ -4,6 +4,11 @@ body {
     text-align: center;
 }
 
+body.background-image {
+    background-color: #558f76;
+}
+
+
 body.page-transition {
     opacity: 0;
 }
@@ -17,13 +22,18 @@ p {
     color: #666;
 }
 
+.container:hover {
+    transform: scale(1.1); /* Add a hover effect to scale containers when hovered */
+}
+
 .container {
     margin: 50px auto;
     max-width: 400px;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
+    padding: 30px;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease;
 }
 
 .button {
@@ -51,4 +61,20 @@ p {
     background-color: #6c757d;
     border-color: #6c757d;
     text-align: left;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(0%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.container, .container2, .container3, .container4, .button, .fa {
+    animation: fadeIn 0.5s ease 1;
 }

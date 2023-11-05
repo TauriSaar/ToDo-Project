@@ -1131,10 +1131,10 @@
                             r = document.createElement("div"), o = document.createElement("h4"),
                             i = document.createElement("p");
                         n.classList.add("empty-state-container"), a.classList.add("empty-state-image"), r.classList.add("empty-state-text"), o.classList.add("empty-state-heading"), i.classList.add("empty-state-body"), a.src = {
-                            Inbox: "components/images/inbox-empty-state.png",
-                            Today: "components/images/today-empty-state.png",
-                            Upcoming: "components/images/upcoming-empty-state.png",
-                            Project: "components/images/project-empty-state.png"
+                            Inbox: "/images/inbox-empty-state.png",
+                            Today: "/images/today-empty-state.png",
+                            Upcoming: "/images/upcoming-empty-state.png",
+                            Project: "/images/project-empty-state.png"
                         }[e];
                         const s = {
                             Inbox: "All clear",
@@ -1252,7 +1252,7 @@
                 d.updateTaskButtonIds(), d.updateTaskButtonDefaultProjectTaskIds()
             }))
         })(), {
-            changeTabTitle: t => document.title = `${t}: Todoist`,
+            changeTabTitle: t => document.title = `${t}: ToDo-List`,
             addSelectedClassToButton: t => t.classList.add("selected"),
             removeSelectedButtonClass: () => {
                 const t = document.querySelectorAll(".sidebar-button");

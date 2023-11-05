@@ -17,10 +17,10 @@
     --form-cancel-hover-bg: #e5e5e5;
     --form-cancel-fg: #202020;
     --form-cancel-hover-fg: #222;
-    --form-add-task-bg: #db4c3f;
+    --form-add-task-bg: #318661;
     --form-add-task-fg: #fff;
-    --form-add-task-hover-bg: #b03d32;
-    --form-add-task-disabled-bg: #f1b7b2;
+    --form-add-task-hover-bg: #4da881;
+    --form-add-task-disabled-bg: #b1e3cf;
     --form-add-task-disabled-fg: #fff;
     --dropdown-item-hover-bg: #f3f3f3;
     --priority-1-icon-color: #d1453b;
@@ -52,6 +52,21 @@
 
 body.page-transition {
     opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(0%); /* Slide in from the left */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+body.page-transition .content {
+    animation: fadeIn 0.6s ease 1;
 }
 
 * {

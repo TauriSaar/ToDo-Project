@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
     // Check if the user is authenticated
     if (!req.session.userId) {
         // If the user is not authenticated, you can redirect to the login page or take appropriate action.
-        res.redirect('/login');
+        res.redirect('/');
     } else {
         // If the user is authenticated, render the 'dashboard.ejs' template from the 'views' directory.
         res.render('dashboard'); // Assuming 'dashboard.ejs' is in the 'views' directory
