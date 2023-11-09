@@ -82,3 +82,50 @@ paths:
           description: Logout successful. The user's session has been terminated, and they are logged out of the system.
         500:
           description: Internal server error. An unexpected server error occurred during the logout process.
+
+  /edit-profile:
+    post:
+      summary: Edit User Profile
+      description: Edit the current user's profile.
+      security:
+        - apiKey: []
+      parameters:
+        - name: firstName
+          in: formData
+          type: string
+          description: User's first name.
+        - name: lastName
+          in: formData
+          type: string
+          description: User's last name.
+        - name: userName
+          in: formData
+          type: string
+          description: User's username.
+        - name: password
+          in: formData
+          type: string
+          description: User's password.
+      responses:
+        200:
+          description: Profile edited successfully. The user's profile has been edited successfully.
+        400:
+          description: Bad request. The request is missing required parameters or includes invalid data.
+        401:
+          description: Unauthorized. The request lacks proper authentication, such as a missing or invalid API key.
+        500:
+          description: Internal server error. An unexpected server error occurred during the profile edit process.
+
+  /delete-account:
+    delete:
+      summary: Delete User Account
+      description: Delete the current user's account.
+      security:
+        - apiKey: []
+      responses:
+        200:
+          description: Account deleted successfully. The user's account has been deleted successfully.
+        401:
+          description: Unauthorized. The request lacks proper authentication, such as a missing or invalid API key.
+        500:
+          description: Internal server error. An unexpected server error occurred during the account deletion process.

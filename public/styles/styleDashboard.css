@@ -32,7 +32,7 @@
     --sidebar-bg: #d2d2d2;
     --sidebar-fg: #202020;
     --sidebar-button-hover-bg: #eeeeee;
-    --sidebar-button-inbox-icon-color: #246fe0;
+    --sidebar-button-inbox-icon-color: #318661;
     --sidebar-button-today-icon-color: #058527;
     --sidebar-button-upcoming-icon-color: #692fc2;
     --sidebar-button-add-project-icon-color: #000;
@@ -1204,5 +1204,17 @@ main {
 
     .editor {
         width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(0%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

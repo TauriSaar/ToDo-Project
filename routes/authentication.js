@@ -3,11 +3,13 @@ const session = require('express-session');
 const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
-const dotenv = require("dotenv"); // Add bcrypt for password hashing
+const dotenv = require("dotenv");
+const path = require("path");
 
 // Load environment variables from .env file
 dotenv.config();
 
+// Set up MySQL connection
 const con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -25,41 +27,58 @@ router.use(
     })
 );
 
+// Define the registration route
 router.get('/', (req, res) => {
-    // Render the login form (you can use a template engine)
+    // Render the login form
     res.render('login');
 });
 
+// Define the registration route
 router.post('/', (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
 
-    // Fetch the hashed password from the database based on the username
-    con.query('SELECT id, password FROM users WHERE username = ?', [userName], (err, result) => {
+    con.query('SELECT id, password, firstname FROM users WHERE username = ?', [userName], (err, result) => {
         if (err) {
             console.log(err);
             return res.status(500).send('Internal Server Error');
         }
 
         if (result.length > 0) {
-            // Compare the provided password with the stored hash
-            const hashedPassword = result[0].password;
+            const userId = result[0].id;
+            const userName = req.body.userName;
 
-            bcrypt.compare(password, hashedPassword, (compareErr, passwordMatch) => {
+            bcrypt.compare(password, result[0].password, (compareErr, passwordMatch) => {
                 if (compareErr) {
                     console.log(compareErr);
                     return res.status(500).send('Internal Server Error');
                 }
 
                 if (passwordMatch) {
-                    req.session.userId = result[0].id; // Store the user's ID
-                    res.redirect('/dashboard'); // Redirect to the dashboard route
+                    req.session.userId = userId;
+
+                    // Log the sign-in action with UserID
+                    const logQuery = 'INSERT INTO Log (DateTime, Action, UserID) VALUES (NOW(), ?, ?)';
+                    const logAction = `User "${userName}" has signed in`;
+
+                    con.query(logQuery, [logAction, userId, userName], (logErr) => {
+                        if (logErr) {
+                            console.log(logErr);
+                            return res.status(500).send('Internal Server Error');
+                        }
+
+                        res.redirect('/dashboard');
+                    });
                 } else {
-                    res.redirect('/failLogin.html'); // Redirect to the failure page
+                    // If the password doesn't match, send failLog.html
+                    const failLogPath = path.join(__dirname, '../views/failpage/failLog.html');
+                    return res.sendFile(failLogPath);
                 }
             });
         } else {
-            res.redirect('/failLogin.html'); // Redirect to the failure page
+            // If the user doesn't exist, send failLog.html
+            const failLogPath = path.join(__dirname, '../views/failpage/failLog.html');
+            return res.sendFile(failLogPath);
         }
     });
 });

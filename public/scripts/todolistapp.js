@@ -14,7 +14,8 @@
                 for (let t = 0; t < s.length; t++) s[t].id = t;
                 o ? r(i) : a(i)
             };
-        return localStorage.getItem("defaultProjects") || (localStorage.setItem("defaultProjects", JSON.stringify([])), localStorage.getItem("projects") || localStorage.setItem("projects", JSON.stringify([]))), (() => {
+        return localStorage.getItem("defaultProjects") || (localStorage.setItem("defaultProjects", JSON.stringify([])),
+        localStorage.getItem("projects") || localStorage.setItem("projects", JSON.stringify([]))), (() => {
             let e = n();
             if (e.length > 0) return;
             const a = ["Inbox"];

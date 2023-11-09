@@ -9,14 +9,20 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
 const dotenv = require('dotenv');
 
+// Set up body parser
 const encodeUrl = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Set up body parser for JSON
 app.use(bodyParser.json());
 
 // Load environment variables from .env file
 dotenv.config();
+
+// Set up the port
 const port = process.env.PORT;
 
+// Set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -33,18 +39,19 @@ app.use((req, res, next) => {
     next();
 });
 
+// Set up static files
 app.use(express.static('public'));
 
 // Session middleware
 app.use(session({
-    secret: 'thisismysecrctekey',
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hours
     resave: false
 }));
 
+// Cookie middleware
 app.use(cookieParser());
-app.use(express.static('public'));
 
 // Database connection
 const con = mysql.createConnection({
@@ -53,7 +60,6 @@ const con = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 });
-
 con.connect(function(err) {
     if (err) {
         console.log(err);
@@ -67,17 +73,21 @@ const registrationRoutes = require('./routes/registration');
 const authenticationRoutes = require('./routes/authentication');
 const dashboardRoutes = require('./routes/dashboard');
 const logoutRoutes = require('./routes/logout');
-app.use('/logout', logoutRoutes);
+const edituserRoutes = require('./routes/edituser');
 
 // Use the imported routes
 app.use('/register', registrationRoutes);
 app.use('/login', authenticationRoutes);
 app.use('/dashboard', dashboardRoutes);
+app.use('/logout', logoutRoutes);
+app.use('/edituser', edituserRoutes);
 
+// Define the front page route
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/frontpage.html');
 });
 
+// App web server
 app.listen(port, () => {
     console.log(`App is running at http://localhost:${port} and docs are at http://localhost:${port}/docs`);
 });

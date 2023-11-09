@@ -14,7 +14,7 @@ Once you have installed Node.js, follow these steps:
 
 1. Open the root directory of the project in terminal.
 2. Copy the .env.sample file to .env by executing `cp .env.sample .env` and change the values to your liking.
-3. Create a MySQL database for the app. You can use the following SQL commands as an example:
+3. Create a MySQL database and a registration, sign in and log out table for the app. You can use the following SQL commands as an example:
  ```mysql
  CREATE DATABASE my_db;
  
@@ -29,6 +29,15 @@ Once you have installed Node.js, follow these steps:
      reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
  );
  ```
+4. Create a MySql log table for the app. You can use the following SQL commands as an example:
+ ```mysql
+CREATE TABLE `log` (
+   LogID bigint unsigned NOT NULL AUTO_INCREMENT,
+   DateTime timestamp NULL DEFAULT NULL,
+   Action text,
+   UserID int unsigned DEFAULT NULL
+);
+ ``` 
 4. Run `npm install` to install all the necessary dependencies for the project.
 5. Run `npm start` to start the server on port 4000 (or whatever port you have specified in the .env file).
 6. Navigate to [http://localhost:4000/docs](http://localhost:4000/docs) to see the API documentation.

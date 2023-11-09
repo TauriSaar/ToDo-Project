@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
         res.redirect('/');
     } else {
         // If the user is authenticated, render the 'dashboard.ejs' template from the 'views' directory.
-        res.render('dashboard'); // Assuming 'dashboard.ejs' is in the 'views' directory
+        res.render('dashboard');
     }
 });
 

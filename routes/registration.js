@@ -9,13 +9,14 @@ const dotenv = require("dotenv");
 // Load environment variables from .env file
 dotenv.config();
 
-
+// Set up MySQL connection
 const con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 });
+
 // Set up session management
 router.use(
     session({
@@ -28,10 +29,11 @@ router.use(
 
 // Define the registration route
 router.get('/', (req, res) => {
-    // Render the registration form (you can use a template engine)
+    // Render the registration form
     res.render('register');
 });
 
+// Define the registration route
 router.post('/', (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -55,7 +57,7 @@ router.post('/', (req, res) => {
             }
 
             if (result.length > 0) {
-                // User already exists, send the 'failReg.html' file
+                // If the User already exists, send the 'failReg.html' file
                 const failRegPath = path.join(__dirname, '../views/failpage/failReg.html'); // Construct the correct file path
                 return res.sendFile(failRegPath);
             } else {
@@ -67,14 +69,26 @@ router.post('/', (req, res) => {
                         // Handle the error
                         return res.status(500).send('Internal Server Error');
                     } else {
-                        // User registered successfully, redirect to another page or send a response
-                        // For example, you can redirect to a 'dashboard' page:
-                        return res.redirect('dashboard');
+                        const userId = result.insertId;
+
+                        // Log the registration action with UserID and account name
+                        const logQuery = 'INSERT INTO Log (DateTime, Action, UserID) VALUES (NOW(), ?, ?)';
+                        const logAction = `A new user "${userName}" was registered`;
+                        con.query(logQuery, [logAction, userId, userName], (logErr) => {
+                            if (logErr) {
+                                console.log(logErr);
+                                return res.status(500).send('Internal Server Error');
+                            }
+
+                            // User registered successfully, redirect to another page or send a response
+                            res.redirect('/dashboard');
+                        });
                     }
                 });
             }
         });
     });
 });
+
 
 module.exports = router;
