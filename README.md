@@ -29,7 +29,7 @@ Once you have installed Node.js, follow these steps:
      reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
  );
  ```
-4. Create a MySql log table for the app. You can use the following SQL commands as an example:
+4. Create a MySQL log table for the app. You can use the following SQL commands as an example:
  ```mysql
 CREATE TABLE `log` (
    LogID bigint unsigned NOT NULL AUTO_INCREMENT,

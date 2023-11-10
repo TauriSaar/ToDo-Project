@@ -9,8 +9,7 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
 const dotenv = require('dotenv');
 
-// Set up body parser
-const encodeUrl = bodyParser.urlencoded({ extended: false });
+// Set up body parser for URL encoded data
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Set up body parser for JSON
@@ -54,13 +53,15 @@ app.use(session({
 app.use(cookieParser());
 
 // Database connection
-const con = mysql.createConnection({
+const con = mysql.createPool({
+    connectionLimit : process.env.DB_CONNECTION_LIMIT,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 });
-con.connect(function(err) {
+
+con.getConnection(function(err) {
     if (err) {
         console.log(err);
     } else {

@@ -10,11 +10,12 @@ const path = require('path');
 dotenv.config();
 
 // Set up MySQL connection
-const con = mysql.createConnection({
+const con = mysql.createPool({
+    connectionLimit : process.env.DB_CONNECTION_LIMIT,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_DATABASE
 });
 
 // Set up session management
