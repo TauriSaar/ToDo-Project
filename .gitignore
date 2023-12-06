@@ -1,5 +1,3 @@
-/node_modules/
-/.idea/
-/.env
-package-lock.json
-/.github/
+terraform.*
+.terraform*
+node_modules
