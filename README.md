@@ -32,10 +32,11 @@ Once you have installed Node.js, follow these steps:
 4. Create a MySQL log table for the app. You can use the following SQL commands as an example:
  ```mysql
 CREATE TABLE `log` (
-   LogID bigint unsigned NOT NULL AUTO_INCREMENT,
-   DateTime timestamp NULL DEFAULT NULL,
-   Action text,
-   UserID int unsigned DEFAULT NULL
+  LogID bigint unsigned NOT NULL AUTO_INCREMENT,
+  DateTime timestamp NULL DEFAULT NULL,
+  Action text,
+  UserID int unsigned DEFAULT NULL,
+  PRIMARY KEY (LogID)
 );
  ``` 
 4. Run `npm install` to install all the necessary dependencies for the project.
